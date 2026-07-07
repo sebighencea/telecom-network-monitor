@@ -1,23 +1,23 @@
 # Telecom Network Monitor 2.0
 
-Un instrument modular scris în C pentru monitorizarea calității conexiunii de rețea (latență și packet loss) în timp real, optimizat pentru macOS și Linux.
+A modular tool written in C for real-time monitoring of network connection quality (latency and packet loss), optimized for macOS and Linux.
 
-## 🚀 Caracteristici
-- **Configurare externă:** Citește automat adresele IP țintă dintr-un fișier `targets.txt`.
-- **Analiză de calitate:** Trimite mai multe pachete ping simultan pentru a calcula procentul de pierderi (*Packet Loss*).
-- **Statistici avansate:** Calculează latența minimă, maximă și latența medie per IP.
-- **Închidere elegantă:** Interceptează semnalul `Ctrl+C` (`SIGINT`) pentru a opri monitorizarea curat și a afișa un raport final formatat.
+## 🚀 Features
+- **External Configuration:** Automatically reads target IP addresses from a `targets.txt` file.
+- **Quality Analysis:** Sends multiple concurrent ping packets to accurately calculate Packet Loss percentage.
+- **Advanced Statistics:** Calculates and displays minimum, maximum, and average latency per target.
+- **Graceful Shutdown:** Intercepts the `Ctrl+C` (`SIGINT`) system signal to cleanly stop monitoring and output a formatted final performance report.
 
-## 🛠️ Structura Proiectului
-- `src/` - Conține codul sursă (`main.c`, `network.c`, `logger.c`)
-- `include/` - Conține fișierele header (`network.h`, `logger.h`)
-- `targets.txt` - Lista de IP-uri de monitorizat
-- `network_log.csv` - Jurnalul de date generat automat
+## 🛠️ Project Structure
+- `src/` - Source code (`main.c`, `network.c`, `logger.c`)
+- `include/` - Header files (`network.h`, `logger.h`)
+- `targets.txt` - List of IPs to monitor
+- `network_log.csv` - Automatically generated data log
 
-## 💻 Cum se rulează
+## 💻 How to Run
 
-1. Asigură-te că ai IP-urile dorite în `targets.txt` (câte unul pe linie).
-2. Compilează și rulează proiectul folosind comanda:
+1. Ensure your desired IPs are listed in `targets.txt` (one per line).
+2. Compile and run the project using the following command:
 
 ```bash
 gcc src/*.c -I include -o monitor_retea && ./monitor_retea
