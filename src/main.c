@@ -51,14 +51,14 @@ int load_targets(const char *filename) {
 int main() {
     signal(SIGINT, handle_sigint);
 
-    printf("=== Pornire Monitor Rețea 2.0 ===\n");
+    printf("=== Starting Network Monitor 2.0 ===\n");
 
     if (load_targets("targets.txt") == 0) {
-        printf("[EROARE] Nu s-a putut deschide targets.txt sau fisierul e gol.\n");
+        printf("[ERROR] Could not open targets.txt or file is empty.\n");
         return 1;
     }
 
-    printf("S-au încărcat %d ținte din targets.txt\n", num_targets);
+    printf("Loaded %d targets from targets.txt\n", num_targets);
     
     const char *log_file = "network_log.csv";
     init_logger(log_file);
@@ -70,18 +70,18 @@ int main() {
         }
 
         if (keep_running) {
-            printf("Așteptare 10 secunde...\n");
+            printf("Waiting 10 seconds...\n");
             for (int s = 0; s < 10 && keep_running; s++) {
                 sleep(1);
             }
         }
     }
 
-    printf("\n\n==================================================\n");
-    printf("        RAPORT FINAL DE PERFORMANȚĂ REȚEA         \n");
-    printf("==================================================\n");
-    printf("%-16s | %-6s | %-6s | %-8s | %-7s\n", "IP Țintă", "Trim.", "Rec.", "Pierdere", "Lat.Med");
-    printf("--------------------------------------------------\n");
+    printf("\n\n======================================================\n");
+    printf("           FINAL NETWORK PERFORMANCE REPORT           \n");
+    printf("======================================================\n");
+    printf("%-16s | %-6s | %-6s | %-8s | %-12s\n", "Target IP", "Sent", "Recv", "Loss", "Avg Latency");
+    printf("------------------------------------------------------\n");
 
     for (int i = 0; i < num_targets; i++) {
         int lost = targets[i].packets_sent - targets[i].packets_received;
@@ -90,14 +90,10 @@ int main() {
 
         if (targets[i].packets_sent > 0) {
             loss_percent = ((double)lost / targets[i].packets_sent) * 100.0;
-        } else {
-            loss_percent = 0.0;
         }
 
         if (targets[i].packets_received > 0) {
             avg_latency = targets[i].total_latency / targets[i].packets_received;
-        } else {
-            avg_latency = 0.0;
         }
 
         printf("%-16s | %-6d | %-6d | %5.1f%%   | %5.2f ms\n",
@@ -108,8 +104,8 @@ int main() {
                avg_latency);
     }
 
-    printf("==================================================\n");
-    printf("Program închis curat. Jurnalul a fost salvat în %s.\n", log_file);
+    printf("======================================================\n");
+    printf("Program closed cleanly. Log saved in %s.\n", log_file);
 
     return 0;
 }
